@@ -171,11 +171,19 @@ const closeModal = document.querySelector('.close-modal');
 
 // Cocktail data with image URLs
 const cocktailData = {
+    // 伏特加基酒
     'manchester': {
         name: '海边的曼彻斯特',
-        image: './figures/wines/ManchesterByTheSea.png',
+        image: './figures/wines/ManchesterByTheSea.jpg',
         description: '半颗柠檬+40ml伏特加+20ml蓝橙+雪碧或者气泡水补满'
     },
+    'fire-cloud': {
+        name: '火烧云',
+        image: './figures/wines/Burning_Cloud.png',
+        description: '一瓶养乐多打底+伏特加30ml+半颗柠檬+一小勺红石榴糖浆'
+    },
+    
+    // 朗姆基酒
     'orange-sea': {
         name: '橘子海',
         image: './figures/wines/OrangeSea.png',
@@ -186,56 +194,30 @@ const cocktailData = {
         image: './figures/wines/Replace.png',
         description: '白朗姆20ml+蓝橙30ml+水溶c补到70%葡萄气泡水补满'
     },
+    
+    // 特调
     'sleeping-pill': {
         name: '安眠药',
         image: './figures/wines/SleepingPills.png',
         description: '养乐多打底+蓝橙20ml+白朗姆20ml+伏特加20ml shake'
     },
-    'fire-cloud': {
-        name: '火烧云',
-        image: 'https://picsum.photos/seed/burning-clouds/600/600.jpg',
-        description: '一瓶养乐多打底+伏特加30ml+半颗柠檬+一小勺红石榴糖浆'
-    },
     'confession': {
         name: '告白',
-        image: 'https://picsum.photos/seed/confession/600/600.jpg',
+        image: './figures/wines/Confession.png',
         description: '蓝橙力娇酒20ml+养乐多一瓶打底元气森林葡萄+伏特加30ml'
     },
-    'special-confession': {
-        name: '告白（特调）',
-        image: 'https://picsum.photos/seed/special-confession/600/600.jpg',
-        description: '红石榴糖浆5ml打底+气泡水补至80%+葡萄果汁+伏特加'
+    'dragon-fruit': {
+        name: '火龙果系列',
+        image: './figures/wines/DragonFruit.png',
+        description: '需要预约'
     },
-    'non-alcoholic-mojito': {
-        name: '无酒精莫吉托',
-        image: 'https://picsum.photos/seed/non-alcoholic-mojito/600/600.jpg',
-        description: '青柠、薄荷、苏打水'
+
+    'hot-wine': {
+        name: '热红酒',
+        image: './figures/wines/HotWine.jpg',
+        description: '需要预约'
     },
-    'fresh-juice': {
-        name: '鲜榨果汁',
-        image: 'https://picsum.photos/seed/fresh-juice/600/600.jpg',
-        description: '橙汁、苹果汁、葡萄汁'
-    },
-    'soda-water': {
-        name: '苏打水',
-        image: 'https://picsum.photos/seed/soda-water/600/600.jpg',
-        description: '原味、柠檬味、青柠味'
-    },
-    'iced-tea': {
-        name: '冰茶',
-        image: 'https://picsum.photos/seed/iced-tea/600/600.jpg',
-        description: '柠檬冰茶、桃子冰茶'
-    },
-    'coffee': {
-        name: '咖啡',
-        image: 'https://picsum.photos/seed/coffee/600/600.jpg',
-        description: '美式、拿铁、卡布奇诺'
-    },
-    'soft-drinks': {
-        name: '软饮',
-        image: 'https://picsum.photos/seed/soft-drinks/600/600.jpg',
-        description: '可乐、雪碧、汤力水'
-    }
+    
 };
 
 // Add click event to all menu items
