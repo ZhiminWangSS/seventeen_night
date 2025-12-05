@@ -259,4 +259,100 @@ function setupModalEvents() {
 // Initialize modal events when page loads
 document.addEventListener('DOMContentLoaded', function() {
     setupModalEvents();
+    setupSubscribeForm();
 });
+
+// Subscribe form functionality
+function setupSubscribeForm() {
+    const subscribeForm = document.querySelector('.subscribe-form');
+    
+    if (subscribeForm) {
+        subscribeForm.addEventListener('submit', function(e) {
+            e.preventDefault(); // Prevent default form submission
+            
+            // Form validation
+            const nickname = document.getElementById('nickname').value.trim();
+            const email = document.getElementById('email').value.trim();
+            
+            if (!nickname || !email) {
+                showMessage('请填写所有必填字段', 'error');
+                return;
+            }
+            
+            // Email validation
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(email)) {
+                showMessage('请输入有效的邮箱地址', 'error');
+                return;
+            }
+            
+            // Create form data for Google Form
+            const formData = new FormData();
+            formData.append('entry.517674580', nickname);
+            formData.append('entry.171183705', email);
+            
+            // Submit to Google Form using fetch
+            fetch('https://docs.google.com/forms/d/e/1FAIpQLScGEU4LiAT0A8HwvtWdfwpxqpI51gI1IkoGrAoTunFCUrsxjA/formResponse', {
+                method: 'POST',
+                mode: 'no-cors',
+                body: formData
+            })
+            .then(() => {
+                // Show success message
+                showMessage('感谢您的订阅！我们会尽快与您联系。', 'success');
+                
+                // Reset form after a delay
+                setTimeout(() => {
+                    subscribeForm.reset();
+                }, 1000);
+            })
+            .catch(error => {
+                console.error('Error submitting form:', error);
+                showMessage('提交失败，请稍后再试', 'error');
+            });
+        });
+    }
+}
+
+// Show message function
+function showMessage(message, type) {
+    // Remove any existing messages
+    const existingMessage = document.querySelector('.form-message');
+    if (existingMessage) {
+        existingMessage.remove();
+    }
+    
+    // Create message element
+    const messageElement = document.createElement('div');
+    messageElement.className = `form-message ${type}`;
+    messageElement.textContent = message;
+    
+    // Style the message
+    messageElement.style.padding = '10px 15px';
+    messageElement.style.marginTop = '15px';
+    messageElement.style.borderRadius = '5px';
+    messageElement.style.textAlign = 'center';
+    
+    if (type === 'error') {
+        messageElement.style.backgroundColor = 'rgba(220, 53, 69, 0.2)';
+        messageElement.style.color = '#dc3545';
+        messageElement.style.border = '1px solid rgba(220, 53, 69, 0.3)';
+    } else {
+        messageElement.style.backgroundColor = 'rgba(40, 167, 69, 0.2)';
+        messageElement.style.color = '#28a745';
+        messageElement.style.border = '1px solid rgba(40, 167, 69, 0.3)';
+    }
+    
+    // Add message to the form
+    const subscribeForm = document.querySelector('.subscribe-form');
+    if (subscribeForm) {
+        subscribeForm.appendChild(messageElement);
+        
+        // Remove message after 5 seconds
+        setTimeout(() => {
+            if (messageElement.parentNode) {
+                messageElement.remove();
+            }
+        }, 5000);
+    }
+}
