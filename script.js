@@ -218,6 +218,23 @@ const cocktailData = {
         description: '需要预约'
     },
     
+    // 威士忌基酒
+    'godfather': {
+        name: '教父',
+        image: './figures/wines/godfather.jpg',
+        description: '教父'
+    },
+    'long-island': {
+        name: '长岛冰茶',
+        image: './figures/wines/long-island.jpg',
+        description: '长岛冰茶'
+    },
+    'whiskey-sour': {
+        name: '威士忌酸',
+        image: './figures/wines/whiskey-sour.jpg',
+        description: '威士忌酸'
+    },
+    
 };
 
 // Add click event to all menu items
