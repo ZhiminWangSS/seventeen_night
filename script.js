@@ -221,12 +221,12 @@ const cocktailData = {
     // 威士忌基酒
     'godfather': {
         name: '教父',
-        image: './figures/wines/godfather.jpg',
+        image: './figures/wines/GodFather.png',
         description: '教父'
     },
     'long-island': {
         name: '长岛冰茶',
-        image: './figures/wines/long-island.jpg',
+        image: './figures/wines/Long_Island_Iced_Tea.jpg',
         description: '长岛冰茶'
     },
     'whiskey-sour': {
