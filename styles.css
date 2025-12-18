@@ -549,3 +549,314 @@ body {
 ::-webkit-scrollbar-thumb:hover {
     background: #b8941f;
 }
+
+/* Review Section - 往期回顾 */
+.review-section {
+    padding: 80px 0;
+    background-color: rgba(26, 26, 26, 0.3);
+}
+
+.review-timeline {
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+.review-item {
+    background-color: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
+    margin-bottom: 20px;
+    overflow: hidden;
+    transition: var(--transition);
+}
+
+.review-item:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+    border-color: var(--secondary-color);
+}
+
+.review-header {
+    display: flex;
+    align-items: center;
+    padding: 20px 25px;
+    cursor: pointer;
+    user-select: none;
+    transition: var(--transition);
+}
+
+.review-header:hover {
+    background-color: rgba(212, 175, 55, 0.05);
+}
+
+.review-date {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: linear-gradient(135deg, var(--secondary-color), #d4a52e);
+    color: var(--primary-color);
+    border-radius: 8px;
+    padding: 10px 15px;
+    margin-right: 20px;
+    min-width: 80px;
+    box-shadow: 0 4px 10px rgba(212, 175, 55, 0.3);
+}
+
+.review-month {
+    font-size: 1.2rem;
+    font-weight: 600;
+    line-height: 1;
+}
+
+.review-year {
+    font-size: 0.9rem;
+    font-weight: 400;
+    margin-top: 2px;
+}
+
+.review-title {
+    flex: 1;
+    font-size: 1.3rem;
+    font-weight: 600;
+    color: var(--text-color);
+}
+
+.review-expand-btn {
+    color: var(--text-muted);
+    font-size: 1.2rem;
+    transition: var(--transition);
+    padding: 8px;
+    border-radius: 50%;
+}
+
+.review-expand-btn:hover {
+    color: var(--secondary-color);
+    background-color: rgba(212, 175, 55, 0.1);
+}
+
+.review-item.expanded .review-expand-btn {
+    transform: rotate(180deg);
+}
+
+.review-gallery {
+    border-top: 1px solid var(--border-color);
+    background-color: rgba(0, 0, 0, 0.2);
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.5s ease, padding 0.3s ease;
+}
+
+.review-item.expanded .review-gallery {
+    max-height: 800px;
+    padding: 25px;
+}
+
+.gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 15px;
+}
+
+.gallery-item {
+    position: relative;
+    border-radius: 10px;
+    overflow: hidden;
+    cursor: pointer;
+    transition: var(--transition);
+    background-color: var(--card-bg);
+    aspect-ratio: 4/3;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+}
+
+.gallery-item:hover {
+    transform: scale(1.03);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+}
+
+.gallery-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: var(--transition);
+}
+
+.gallery-item:hover img {
+    transform: scale(1.1);
+    filter: brightness(0.7);
+}
+
+.gallery-overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.8), transparent);
+    color: white;
+    padding: 15px 10px 10px;
+    text-align: center;
+    font-size: 0.9rem;
+    font-weight: 500;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: var(--transition);
+}
+
+.gallery-item:hover .gallery-overlay {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* 单张图片查看器 */
+.single-image-viewer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+}
+
+.image-container {
+    position: relative;
+    width: 100%;
+    max-width: 600px;
+    margin: 0 auto;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+}
+
+.image-container img {
+    width: 100%;
+    height: auto;
+    display: block;
+    transition: transform 0.3s ease;
+}
+
+.image-navigation {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    padding: 0 20px;
+    pointer-events: none;
+}
+
+.nav-btn {
+    width: 50px;
+    height: 50px;
+    border: none;
+    border-radius: 50%;
+    background-color: rgba(0, 0, 0, 0.6);
+    color: white;
+    font-size: 24px;
+    cursor: pointer;
+    pointer-events: all;
+    transition: var(--transition);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    backdrop-filter: blur(5px);
+}
+
+.nav-btn:hover {
+    background-color: rgba(0, 0, 0, 0.8);
+    transform: scale(1.1);
+}
+
+.nav-btn:active {
+    transform: scale(0.95);
+}
+
+.nav-btn.prev-btn {
+    margin-right: 10px;
+}
+
+.nav-btn.next-btn {
+    margin-left: 10px;
+}
+
+.image-info {
+    text-align: center;
+    color: var(--text-color);
+}
+
+.image-description {
+    font-size: 1.1rem;
+    color: var(--text-muted);
+    margin: 0;
+    font-style: italic;
+}
+
+/* 响应式设计 */
+@media (max-width: 768px) {
+    .review-section {
+        padding: 60px 0;
+    }
+    
+    .review-header {
+        padding: 15px 20px;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 15px;
+    }
+    
+    .review-date {
+        margin-right: 0;
+        min-width: 70px;
+        padding: 8px 12px;
+    }
+    
+    .review-title {
+        font-size: 1.2rem;
+        text-align: center;
+        flex: none;
+        width: 100%;
+    }
+    
+    .review-expand-btn {
+        align-self: flex-end;
+        margin-top: -10px;
+    }
+    
+    .review-item.expanded .review-gallery {
+        max-height: 1200px;
+        padding: 20px;
+    }
+    
+    .gallery-grid {
+        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+        gap: 10px;
+    }
+    
+    .gallery-overlay {
+        font-size: 0.8rem;
+        padding: 12px 8px 8px;
+    }
+}
+
+@media (max-width: 480px) {
+    .gallery-grid {
+        grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+        gap: 8px;
+    }
+    
+    .image-container {
+        max-width: 100%;
+        margin: 0;
+    }
+    
+    .image-navigation {
+        padding: 0 10px;
+    }
+    
+    .nav-btn {
+        width: 40px;
+        height: 40px;
+        font-size: 20px;
+    }
+    
+    .image-description {
+        font-size: 1rem;
+    }
+}

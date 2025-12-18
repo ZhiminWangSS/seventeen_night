@@ -101,7 +101,6 @@ document.addEventListener('DOMContentLoaded', function() {
         
         sections.forEach(section => {
             const sectionTop = section.offsetTop;
-            const sectionHeight = section.clientHeight;
             
             if (scrollY >= (sectionTop - 100)) {
                 current = section.getAttribute('id');
@@ -162,6 +161,147 @@ window.addEventListener('load', function() {
     }
 });
 
+// 往期回顾功能
+function setupReviewGallery() {
+    const reviewItems = document.querySelectorAll('.review-item');
+    
+    reviewItems.forEach(item => {
+        const header = item.querySelector('.review-header');
+        const gallery = item.querySelector('.review-gallery');
+        const expandBtn = item.querySelector('.review-expand-btn');
+        
+        if (header && gallery && expandBtn) {
+            header.addEventListener('click', function() {
+                const isExpanded = item.classList.contains('expanded');
+                
+                // 关闭其他展开的项目
+                reviewItems.forEach(otherItem => {
+                    if (otherItem !== item && otherItem.classList.contains('expanded')) {
+                        otherItem.classList.remove('expanded');
+                        otherItem.querySelector('.review-gallery').style.display = 'none';
+                    }
+                });
+                
+                // 切换当前项目状态
+                if (isExpanded) {
+                    item.classList.remove('expanded');
+                    gallery.style.display = 'none';
+                } else {
+                    item.classList.add('expanded');
+                    gallery.style.display = 'block';
+                }
+            });
+        }
+        
+        // 为单张图片查看器添加功能
+        const reviewImage = item.querySelector('#review-image');
+        const prevBtn = item.querySelector('#prev-btn');
+        const nextBtn = item.querySelector('#next-btn');
+        
+        if (reviewImage && prevBtn && nextBtn) {
+            // 图片数据数组（可以扩展为多张图片）
+            const images = [
+                {
+                    src: './figures/snapshot/2025-12-17.png',
+                    alt: '2025年12月精彩瞬间',
+                    description: '2025年12月精彩瞬间'
+                }
+                // 可以在这里添加更多图片
+                // {
+                //     src: './figures/snapshot/another-photo.jpg',
+                //     alt: '其他照片',
+                //     description: '其他精彩瞬间'
+                // }
+            ];
+            
+            let currentImageIndex = 0;
+            
+            // 更新图片显示
+            function updateImage() {
+                const currentImage = images[currentImageIndex];
+                reviewImage.src = currentImage.src;
+                reviewImage.alt = currentImage.alt;
+                
+                const description = item.querySelector('.image-description');
+                if (description) {
+                    description.textContent = currentImage.description;
+                }
+                
+                // 更新按钮状态
+                prevBtn.style.opacity = currentImageIndex === 0 ? '0.3' : '1';
+                nextBtn.style.opacity = currentImageIndex === images.length - 1 ? '0.3' : '1';
+                prevBtn.style.cursor = currentImageIndex === 0 ? 'not-allowed' : 'pointer';
+                nextBtn.style.cursor = currentImageIndex === images.length - 1 ? 'not-allowed' : 'pointer';
+            }
+            
+            // 上一张按钮
+            prevBtn.addEventListener('click', function() {
+                if (currentImageIndex > 0) {
+                    currentImageIndex--;
+                    updateImage();
+                }
+            });
+            
+            // 下一张按钮
+            nextBtn.addEventListener('click', function() {
+                if (currentImageIndex < images.length - 1) {
+                    currentImageIndex++;
+                    updateImage();
+                }
+            });
+            
+            // 点击图片放大功能
+            reviewImage.addEventListener('click', function() {
+                // 使用现有的modal显示放大图片
+                const modal = document.getElementById('cocktail-modal');
+                const modalImage = document.getElementById('modal-image');
+                const modalTitle = document.getElementById('modal-title');
+                const modalDescription = document.getElementById('modal-description');
+                
+                if (modal && modalImage && modalTitle && modalDescription) {
+                    modalImage.src = this.src;
+                    modalImage.alt = this.alt;
+                    modalTitle.textContent = this.alt;
+                    modalDescription.textContent = images[currentImageIndex].description;
+                    
+                    modal.style.display = 'block';
+                    document.body.style.overflow = 'hidden';
+                }
+            });
+            
+            // 初始化按钮状态
+            updateImage();
+        }
+        
+        // 保留原有的多图片网格点击放大功能（以防有其他地方还在使用）
+        const galleryImages = item.querySelectorAll('.gallery-item');
+        galleryImages.forEach(galleryImage => {
+            galleryImage.addEventListener('click', function() {
+                const img = this.querySelector('img');
+                const overlay = this.querySelector('.gallery-overlay span');
+                if (img) {
+                    // 使用现有的modal显示放大图片
+                    const modal = document.getElementById('cocktail-modal');
+                    const modalImage = document.getElementById('modal-image');
+                    const modalTitle = document.getElementById('modal-title');
+                    const modalDescription = document.getElementById('modal-description');
+                    
+                    if (modal && modalImage && modalTitle && modalDescription) {
+                        modalImage.src = img.src;
+                        modalImage.alt = img.alt;
+                        modalTitle.textContent = img.alt;
+                        
+                        if (description && overlay) modalDescription.textContent = overlay.textContent;
+                        
+                        modal.style.display = 'block';
+                        document.body.style.overflow = 'hidden';
+                    }
+                }
+            });
+        });
+    });
+}
+
 // Modal functionality
 const modal = document.getElementById('cocktail-modal');
 const modalImage = document.getElementById('modal-image');
@@ -175,36 +315,42 @@ const cocktailData = {
     'manchester': {
         name: '海边的曼彻斯特',
         image: './figures/wines/ManchesterByTheSea.jpg',
-        description: '半颗柠檬+40ml伏特加+20ml蓝橙+雪碧或者气泡水补满'
+        // description: '半颗柠檬+40ml伏特加+20ml蓝橙+雪碧或者气泡水补满'
+        description: " "
     },
     'fire-cloud': {
         name: '火烧云',
         image: './figures/wines/Burning_Cloud.png',
-        description: '一瓶养乐多打底+伏特加30ml+半颗柠檬+一小勺红石榴糖浆'
+        // description: '一瓶养乐多打底+伏特加30ml+半颗柠檬+一小勺红石榴糖浆'
+        description: " "
     },
     
     // 朗姆基酒
     'orange-sea': {
         name: '橘子海',
         image: './figures/wines/OrangeSea.png',
-        description: '白朗姆20ml+蓝橙30ml shake橙汁打底+酒液'
+        // description: '白朗姆20ml+蓝橙30ml shake橙汁打底+酒液'
+        description: " "
     },
     'replace': {
         name: '代替',   
         image: './figures/wines/Replace.png',
-        description: '白朗姆20ml+蓝橙30ml+水溶c补到70%葡萄气泡水补满'
+        // description: '白朗姆20ml+蓝橙30ml+水溶c补到70%葡萄气泡水补满'
+        description: " "
     },
     
     // 特调
     'sleeping-pill': {
         name: '安眠药',
         image: './figures/wines/SleepingPills.png',
-        description: '养乐多打底+蓝橙20ml+白朗姆20ml+伏特加20ml shake'
+        // description: '养乐多打底+蓝橙20ml+白朗姆20ml+伏特加20ml shake'
+        description: " "
     },
     'confession': {
         name: '告白',
         image: './figures/wines/Confession.png',
-        description: '蓝橙力娇酒20ml+养乐多一瓶打底元气森林葡萄+伏特加30ml'
+        // description: '蓝橙力娇酒20ml+养乐多一瓶打底元气森林葡萄+伏特加30ml'
+        description: " "
     },
     'dragon-fruit': {
         name: '火龙果系列',
@@ -277,6 +423,7 @@ function setupModalEvents() {
 document.addEventListener('DOMContentLoaded', function() {
     setupModalEvents();
     setupSubscribeForm();
+    setupReviewGallery();
 });
 
 // Subscribe form functionality
